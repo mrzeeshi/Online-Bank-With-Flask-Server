@@ -3,11 +3,51 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="./src/output.css" rel="stylesheet">
+  <link rel="stylesheet"
+      href="{{ url_for('static', filename='output.css') }}">
 </head>
-<body class="flex flex-col justify-center">
-  <h1 class="text-amber-50 font-stretch-50%">
-    Hello world!
-  </h1>
+<body class="flex flex-col justify-center bg-slate-900 p-30">
+    {% if error %}
+    <div class="bg-red-500 h-50 w-80 text-white">
+        {{error}}
+    </div>
+    {% endif %}
+    <div class="bg-slate-600 rounded-sm border-white flex flex-col h-full justify-around w-100 md:flex flex-wrap md:w-full gap-5 p-10">
+        <div class="font-bold self-center text-blue-50 text-4xl">Welcome To ZeeBank</div>
+        <form action="http://127.0.0.1:5000/" method="POST" name="signupform" class="flex flex-col justify-center items-center gap-4">
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 flex-wrap">
+                <div class="flex flex-col justify-start">
+                    <label class="text-amber-50 text-lg" for="fname">First Name</label>
+                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="text" name="fname" placeholder="John" required>
+                </div>
+                <div class="flex flex-col justify-start">
+                    <label class="text-amber-50 text-lg" for="lname">Last Name</label>
+                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="text" name="lname" placeholder="Doe" required>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 flex-wrap">
+                <div class="flex flex-col justify-start">
+                    <label class="text-amber-50 text-lg" for="phone">Phone Number</label>
+                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="tel" name="phone" placeholder="+1000000" required>
+                </div>
+                <div class="flex flex-col justify-start">
+                    <label class="text-amber-50 text-lg" for="mail">Email</label>
+                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="email" name="mail" placeholder="johndoe@gmail.com" required>
+                </div>
+            </div>
+            <div class="flex flex-col md:flex-row justify-center items-center gap-4 flex-wrap">
+                <div class="flex flex-col justify-start">
+                    <label class="text-amber-50 text-lg" for="pass">Password</label>
+                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="password" name="pass" required>
+                </div>
+                <div class="flex flex-col justify-start">
+                    <label class="text-amber-50 text-lg" for="confpass">Confirm Password</label>
+                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10 focus:border-none" type="password" name="confpass" required>
+                </div>
+            </div>
+            <input class="bg-blue-600 text-amber-50 rounded-lg shadow p-3 w-80 h-10 hover:bg-blue-500 transition hover:scale-105" type="submit" value="Create Account">
+            <p>Already have and account?<a class="font-bold hover:scale-101 text-blue-400" href="Login.html"> Login</a></p>
+        </form>
+    </div>
 </body>
 </html>
