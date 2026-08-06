@@ -1,0 +1,96 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/output.css') }}">
+</head>
+
+<body class="flex flex-col justify-center bg-slate-900 p-30">
+
+    <div class="bg-slate-600 rounded-sm border-white flex flex-col justify-around w-100 md:w-full gap-5 p-10">
+
+        <div class="font-bold self-center text-blue-50 text-2xl md:text-4xl">
+            Welcome Back To ZeeBank
+        </div>
+
+        <form action="http://127.0.0.1:5000/login" method="POST"
+              class="flex flex-col justify-center items-center gap-6">
+
+            {% if error %}
+            <div class="rounded-lg self-center bg-red-500 md:absolute md:top-60 md:left-120 z-50 w-80 h-auto text-white p-10 flex justify-center gap-4 items-center flex-col"
+                 id="warning">
+
+                Invalid Usename Or Password
+
+                <button class="bg-blue-600 rounded-lg text-white p-2 w-28 hover:bg-blue-500"
+                        type="button"
+                        onclick="hide_warning()">
+                    OK
+                </button>
+
+            </div>
+            {% endif %}
+
+            <div class="flex flex-col justify-start">
+
+                <label class="text-amber-50 text-lg">
+                    Email
+                </label>
+
+                <input
+                    class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10"
+                    type="email"
+                    name="mail"
+                    placeholder="johndoe@gmail.com"
+                    required
+                    value="{{ email if email else '' }}">
+
+            </div>
+
+            <div class="flex flex-col justify-start">
+
+                <label class="text-amber-50 text-lg">
+                    Password
+                </label>
+
+                <input
+                    class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10"
+                    type="password"
+                    name="pass"
+                    required>
+
+            </div>
+
+            <input
+                class="bg-blue-600 text-amber-50 rounded-lg shadow p-3 w-80 h-10 hover:bg-blue-500 transition hover:scale-105 cursor-pointer"
+                type="submit"
+                value="Login">
+
+            <a href="#"
+               class="text-blue-400 hover:underline">
+                Forgot Password?
+            </a>
+
+            <p class="text-white">
+                Don't have an account?
+                <a class="font-bold text-blue-400 hover:text-blue-300"
+                   href="/signup">
+                    Create Account
+                </a>
+            </p>
+
+        </form>
+
+    </div>
+
+</body>
+
+<script>
+function hide_warning(){
+    document.getElementById("warning").style.display = "none";
+}
+</script>
+
+</html>

@@ -4,35 +4,37 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet"
-      href="{{ url_for('static', filename='output.css') }}">
+      href="{{ url_for('static', filename='css/output.css') }}">
 </head>
 <body class="flex flex-col justify-center bg-slate-900 p-30">
-    {% if error %}
-    <div class="bg-red-500 h-50 w-80 text-white">
-        {{error}}
-    </div>
-    {% endif %}
     <div class="bg-slate-600 rounded-sm border-white flex flex-col h-full justify-around w-100 md:flex flex-wrap md:w-full gap-5 p-10">
-        <div class="font-bold self-center text-blue-50 text-4xl">Welcome To ZeeBank</div>
-        <form action="http://127.0.0.1:5000/" method="POST" name="signupform" class="flex flex-col justify-center items-center gap-4">
-            <div class="flex flex-col md:flex-row justify-center items-center gap-4 flex-wrap">
+        <div class="font-bold self-center text-blue-50 text-2xl md:text-4xl">Welcome To ZeeBank</div>
+        <form action="http://127.0.0.1:5000/signup" method="POST" name="signupform" class="flex flex-col justify-center items-center gap-4">
+            {% if error %}
+            <div class="rounded-lg self-center bg-red-500 md:absolute md:top-60 md:left-120 z-50 w-80 h-auto text-white p-10 flex justify-center gap-4 items-center flex-col" id="warning">
+                <div><h4>ERROR</h4></div>
+                <div>{{error}}</div>
+                <button class="bg-blue-600 rounded-lg text-white p-3 w-30 h-10" type="submit" onclick="hide_warning()">OK</button>
+            </div>
+                {% endif %}
+            <div class="flex flex-col  md:flex-row justify-center items-center gap-4 flex-wrap">
                 <div class="flex flex-col justify-start">
                     <label class="text-amber-50 text-lg" for="fname">First Name</label>
-                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="text" name="fname" placeholder="John" required>
+                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="text" name="fname" placeholder="John" value="{{fname if fname else ''}}">
                 </div>
                 <div class="flex flex-col justify-start">
                     <label class="text-amber-50 text-lg" for="lname">Last Name</label>
-                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="text" name="lname" placeholder="Doe" required>
+                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="text" name="lname" placeholder="Doe" required value="{{lname if lname else ''}}">
                 </div>
             </div>
             <div class="flex flex-col md:flex-row justify-center items-center gap-4 flex-wrap">
                 <div class="flex flex-col justify-start">
                     <label class="text-amber-50 text-lg" for="phone">Phone Number</label>
-                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="tel" name="phone" placeholder="+1000000" required>
+                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="tel" name="phone" placeholder="+1000000" required value="{{phone if phone else ''}}">
                 </div>
                 <div class="flex flex-col justify-start">
                     <label class="text-amber-50 text-lg" for="mail">Email</label>
-                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="email" name="mail" placeholder="johndoe@gmail.com" required>
+                    <input class="bg-amber-50 rounded-lg shadow p-3 w-80 h-10" type="email" name="mail" placeholder="johndoe@gmail.com" required value="{{email if email else ''}}">
                 </div>
             </div>
             <div class="flex flex-col md:flex-row justify-center items-center gap-4 flex-wrap">
@@ -50,4 +52,9 @@
         </form>
     </div>
 </body>
+<script>
+    function hide_warning(){
+        document.getElementById("warning").style.display="none";
+    }
+</script>
 </html>
