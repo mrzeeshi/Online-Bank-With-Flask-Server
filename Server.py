@@ -49,10 +49,13 @@ def login():
             users_data=json.load(file)
         for user in users_data:
             if (pass_hash==user["password"] and email==user["email"]):
-                return render_template('dashboard.html')
+                return render_template('Dashboard.html')
         return render_template('Login.html',error=email)
     else:
         return render_template('Login.html')
+@app.route('/Dashboard')
+def dashboard():
+    return render_template('Dashboard.html')
 symbs = "!@#$%^&*()_+-=[]{}|;:',.<>?/"
 def verify_pass(password):
     return (

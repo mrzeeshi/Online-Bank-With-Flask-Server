@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"
+      href="{{ url_for('static', filename='css/output.css') }}">
+</head>
+<body class="bg-slate-900 flex p-10 flex-col gap-10">
+    <div class="flex flex-row justify-around border-2 rounded border-white p-4">
+        <div class=" flex gap-4 flex-col">
+            <h2 class="text-3xl font-bold text-white">Welcome Dear</h2>
+            <h1 class="font-bold font-stretch-75% text-white text-7xl">Zeeshan Haider</h1>
+        </div>
+
+        <div
+            class="w-40 h-40 rounded-full bg-cover bg-center border-2 border-white"
+            style="background-image: url('{{ url_for('static', filename='images/img.jpg') }}');">
+        </div>
+    </div>
+    <div class="flex flex-wrap justify-center gap-10">
+        <div class="w-55 h-35 bg-white rounded-xl"></div>
+        <div class="w-55 h-35 bg-white rounded-xl"></div>
+        <div class="w-55 h-35 bg-white rounded-xl"></div>
+        <div class="w-55 h-35 bg-white rounded-xl"></div>
+        <div class="w-55 h-35 bg-white rounded-xl"></div>
+        <div class="w-55 h-35 bg-white rounded-xl"></div>
+    </div>
+</body>
+55html5
