@@ -1,31 +1,1952 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+
+    <title>ZeeBank Dashboard</title>
+
     <link rel="stylesheet"
-      href="{{ url_for('static', filename='css/output.css') }}">
+        href="{{ url_for('static', filename='css/output.css') }}">
 </head>
-<body class="bg-slate-900 flex p-10 flex-col gap-10">
-    <div class="flex flex-row justify-around border-2 rounded border-white p-4">
-        <div class=" flex gap-4 flex-col">
-            <h2 class="text-3xl font-bold text-white">Welcome Dear</h2>
-            <h1 class="font-bold font-stretch-75% text-white text-7xl">Zeeshan Haider</h1>
+
+<body class="min-h-screen bg-slate-950 text-white p-4 md:p-8">
+
+    <!-- MAIN CONTAINER -->
+    <div
+        class="min-h-[calc(100vh-4rem)]
+        bg-gradient-to-br from-black via-slate-950 to-blue-950/60
+        rounded-3xl
+        border border-white/10
+        shadow-[0_0_100px_rgba(59,130,246,0.12)]
+        overflow-hidden">
+
+        <!-- ================= HEADER ================= -->
+        <header
+            class="h-20 px-6 md:px-10
+            border-b border-white/10
+            flex items-center justify-between">
+
+            <!-- LOGO -->
+            <div class="flex items-center gap-3">
+
+                <div
+                    class="w-10 h-10 rounded-xl
+                    bg-gradient-to-br from-blue-500 to-cyan-400
+                    flex items-center justify-center
+                    font-black text-xl text-white">
+                    Z
+                </div>
+
+                <div>
+                    <h1 class="text-xl font-bold">ZeeBank</h1>
+                    <p class="text-[10px] text-slate-400 uppercase tracking-widest">
+                        Digital Banking
+                    </p>
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT HEADER -->
+            <div class="flex items-center gap-4">
+
+                <!-- SEARCH -->
+                <div class="hidden md:flex relative">
+
+                    <input
+                        type="search"
+                        placeholder="Search..."
+                        class="w-52 h-10
+                        pl-10 pr-4
+                        rounded-xl
+                        bg-white/5
+                        border border-white/10
+                        outline-none
+                        text-sm
+                        placeholder:text-slate-500
+                        focus:border-blue-500/50
+                        transition">
+
+                    <svg
+                        class="absolute left-3 top-3 w-4 h-4 text-slate-500"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24">
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="m21 21-4.35-4.35m2.35-5.65a8 8 0 1 1-16 0 8 8 0 0 1 16 0Z"/>
+
+                    </svg>
+
+                </div>
+
+
+                <!-- NOTIFICATION -->
+                <button
+                    class="w-10 h-10 rounded-full
+                    bg-white/5
+                    border border-white/10
+                    flex items-center justify-center
+                    hover:bg-white/10 transition">
+
+                    <svg
+                        class="w-5 h-5 text-slate-300"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24">
+
+                        <path
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            stroke-width="2"
+                            d="M15 17h5l-1.4-1.4A2 2 0 0 1 18 14.2V11a6 6 0 0 0-12 0v3.2c0 .5-.2 1-.6 1.4L4 17h5m6 0v1a3 3 0 0 1-6 0v-1"/>
+
+                    </svg>
+
+                </button>
+
+
+                <!-- PROFILE -->
+                <div class="hidden sm:flex items-center gap-3">
+
+                    <div
+                        class="w-10 h-10 rounded-full
+                        bg-gradient-to-br from-blue-500 to-purple-500
+                        flex items-center justify-center
+                        font-bold">
+
+                        Z
+
+                    </div>
+
+                    <div class="leading-tight">
+
+                        <p class="text-sm font-bold">
+                            {{name if name else "Guest"}}
+                        </p>
+
+                        <p class="text-xs text-slate-500">
+                            {{username if username else "@guest"}}
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <main class="p-6 md:p-10">
+
+            <!-- TITLE -->
+            <div class="flex flex-col md:flex-row md:items-center
+                        justify-between gap-4 mb-8">
+
+                <div>
+
+                    <p class="text-sm text-slate-500 mb-1">
+                        Welcome back,
+                    </p>
+
+                    <h2 class="text-3xl font-bold">
+                        Dashboard
+                    </h2>
+
+                </div>
+
+
+                <!-- DATE -->
+                <div
+                    class="px-4 py-2
+                    rounded-xl
+                    bg-white/5
+                    border border-white/10
+                    text-sm text-slate-400">
+
+                    {{date}}
+
+                </div>
+
+            </div>
+
+
+            <!-- ================= BALANCE SECTION ================= -->
+
+            <section
+                class="grid grid-cols-1 lg:grid-cols-3 gap-5 mb-8">
+
+                <!-- MAIN BALANCE -->
+
+                <div
+                    class="lg:col-span-2
+                    relative overflow-hidden
+                    rounded-2xl
+                    p-7
+                    bg-gradient-to-br
+                    from-blue-600/30
+                    via-blue-950/40
+                    to-black
+                    border border-blue-500/20">
+
+                    <!-- GLOW -->
+
+                    <div
+                        class="absolute -right-20 -top-20
+                        w-64 h-64
+                        bg-blue-500/20
+                        rounded-full blur-3xl">
+                    </div>
+
+
+                    <div class="relative z-10">
+
+                        <div class="flex justify-between items-start">
+
+                            <div>
+
+                                <p class="text-sm text-slate-400">
+                                    Total Balance
+                                </p>
+
+                                <h3 class="text-4xl font-bold mt-2">
+                                    {{balance if balance else '000000$'}}
+                                </h3>
+
+                                <div
+                                    class="flex items-center gap-2 mt-3">
+
+                                    <span
+                                        class="text-green-400 text-sm font-semibold">
+                                        +8.24%
+                                    </span>
+
+                                    <span
+                                        class="text-xs text-slate-500">
+                                        from last month
+                                    </span>
+
+                                </div>
+
+                            </div>
+
+
+                            <!-- CARD CHIP -->
+
+                            <div
+                                class="w-12 h-12
+                                rounded-xl
+                                bg-white/10
+                                flex items-center justify-center">
+
+                                <svg
+                                    class="w-6 h-6 text-blue-400"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    viewBox="0 0 24 24">
+
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        stroke-width="2"
+                                        d="M3 10h18M7 15h2m4 0h4M5 5h14a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2Z"/>
+
+                                </svg>
+
+                            </div>
+
+                        </div>
+
+
+                        <div
+                            class="flex justify-between items-end mt-12">
+
+                            <div>
+
+                                <p class="text-[10px] text-slate-500 uppercase">
+                                    Account Number
+                                </p>
+
+                                <p class="text-sm tracking-widest mt-1">
+                                    {{account_no if account_no else '0000 0000 0000 0000'}}
+                                </p>
+
+                            </div>
+
+                            <p class="text-sm text-slate-400">
+                                USD
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SAVINGS / DEPOSITS -->
+
+                <div
+                    class="rounded-2xl
+                    p-6
+                    bg-white/[0.03]
+                    border border-white/10">
+
+                    <div class="flex justify-between">
+
+                        <div>
+
+                            <p class="text-sm text-slate-400">
+                                Savings Goal
+                            </p>
+
+                            <h3 class="text-2xl font-bold mt-2">
+                                $4,200
+                            </h3>
+
+                        </div>
+
+                        <span class="text-xs text-blue-400">
+                            70%
+                        </span>
+
+                    </div>
+
+
+                    <!-- PROGRESS -->
+
+                    <div
+                        class="mt-7
+                        h-2
+                        rounded-full
+                        bg-slate-800
+                        overflow-hidden">
+
+                        <div
+                            class="h-full w-[70%]
+                            rounded-full
+                            bg-gradient-to-r
+                            from-blue-500
+                            to-cyan-400">
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="flex justify-between
+                        text-xs
+                        text-slate-500
+                        mt-3">
+
+                        <span>$4,200 saved</span>
+                        <span>Goal $6,000</span>
+
+                    </div>
+
+
+                    <button
+                        class="mt-6 w-full
+                        h-10
+                        rounded-xl
+                        bg-white/5
+                        border border-white/10
+                        text-sm
+                        hover:bg-white/10
+                        transition">
+
+                        View Savings
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= QUICK ACTIONS ================= -->
+
+            <section class="mb-8">
+
+                <h3 class="text-lg font-semibold mb-4">
+                    Quick Actions
+                </h3>
+
+
+                <div
+                    class="grid grid-cols-2 md:grid-cols-4 gap-4">
+
+                    <!-- SEND -->
+
+                    <button
+                        class="p-5
+                        rounded-2xl
+                        bg-white/[0.03]
+                        border border-white/10
+                        text-left
+                        hover:bg-blue-500/10
+                        hover:border-blue-500/30
+                        transition" onclick="openSendMoneyModal()">
+
+                        <div
+                            class="w-11 h-11
+                            rounded-xl
+                            bg-blue-500/10
+                            text-blue-400
+                            flex items-center justify-center
+                            mb-4">
+
+                            ↑
+
+                        </div>
+
+                        <p class="font-semibold">
+                            Send Money
+                        </p>
+
+                        <p class="text-xs text-slate-500 mt-1">
+                            Transfer funds
+                        </p>
+
+                    </button>
+
+
+                    <!-- RECEIVE -->
+
+                    <button
+                        class="p-5
+                        rounded-2xl
+                        bg-white/[0.03]
+                        border border-white/10
+                        text-left
+                        hover:bg-green-500/10
+                        hover:border-green-500/30
+                        transition" onclick="openReceiveMoneyModal()">
+
+                        <div
+                            class="w-11 h-11
+                            rounded-xl
+                            bg-green-500/10
+                            text-green-400
+                            flex items-center justify-center
+                            mb-4">
+
+                            ↓
+
+                        </div>
+
+                        <p class="font-semibold">
+                            Receive
+                        </p>
+
+                        <p class="text-xs text-slate-500 mt-1">
+                            Request money
+                        </p>
+
+                    </button>
+
+
+                    <!-- PAY -->
+
+                    <button
+                        class="p-5
+                        rounded-2xl
+                        bg-white/[0.03]
+                        border border-white/10
+                        text-left
+                        hover:bg-purple-500/10
+                        hover:border-purple-500/30
+                        transition" onclick="openPayBillsModal()">
+
+                        <div
+                            class="w-11 h-11
+                            rounded-xl
+                            bg-purple-500/10
+                            text-purple-400
+                            flex items-center justify-center
+                            mb-4">
+
+                            $
+
+                        </div>
+
+                        <p class="font-semibold">
+                            Pay Bills
+                        </p>
+
+                        <p class="text-xs text-slate-500 mt-1">
+                            Manage bills
+                        </p>
+
+                    </button>
+
+
+                    <!-- ADD -->
+
+                    <button
+                        class="p-5
+                        rounded-2xl
+                        bg-white/[0.03]
+                        border border-white/10
+                        text-left
+                        hover:bg-orange-500/10
+                        hover:border-orange-500/30
+                        transition" onclick="openAddFundsModal()">
+
+                        <div
+                            class="w-11 h-11
+                            rounded-xl
+                            bg-orange-500/10
+                            text-orange-400
+                            flex items-center justify-center
+                            mb-4">
+
+                            +
+
+                        </div>
+
+                        <p class="font-semibold">
+                            Add Money
+                        </p>
+
+                        <p class="text-xs text-slate-500 mt-1">
+                            Deposit funds
+                        </p>
+
+                    </button>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= LOWER CONTENT ================= -->
+
+            <section
+                class="grid grid-cols-1 xl:grid-cols-3 gap-5">
+
+                <!-- TRANSACTIONS -->
+
+                <div
+                    class="xl:col-span-2
+                    rounded-2xl
+                    bg-white/[0.03]
+                    border border-white/10
+                    overflow-hidden">
+
+                    <!-- HEADER -->
+
+                    <div
+                        class="p-6
+                        flex items-center justify-between
+                        border-b border-white/10">
+
+                        <div>
+
+                            <h3 class="font-semibold">
+                                Recent Transactions
+                            </h3>
+
+                            <p class="text-xs text-slate-500 mt-1">
+                                Your latest account activity
+                            </p>
+
+                        </div>
+
+                        <button
+                            class="text-xs text-blue-400
+                            hover:text-blue-300">
+
+                            View all
+
+                        </button>
+
+                    </div>
+
+
+                    <!-- TRANSACTION 1 -->
+
+                    <div
+                        class="px-6 py-4
+                        flex items-center justify-between
+                        hover:bg-white/[0.02]
+                        transition">
+
+                        <div class="flex items-center gap-4">
+
+                            <div
+                                class="w-11 h-11
+                                rounded-full
+                                bg-red-500/10
+                                text-red-400
+                                flex items-center justify-center">
+
+                                ↓
+
+                            </div>
+
+                            <div>
+
+                                <p class="text-sm font-medium">
+                                    Netflix
+                                </p>
+
+                                <p class="text-xs text-slate-500">
+                                    Entertainment · Today
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <p class="text-sm font-semibold text-red-400">
+                            -$18.99
+                        </p>
+
+                    </div>
+
+
+                    <!-- TRANSACTION 2 -->
+
+                    <div
+                        class="px-6 py-4
+                        flex items-center justify-between
+                        hover:bg-white/[0.02]
+                        transition">
+
+                        <div class="flex items-center gap-4">
+
+                            <div
+                                class="w-11 h-11
+                                rounded-full
+                                bg-green-500/10
+                                text-green-400
+                                flex items-center justify-center">
+
+                                ↑
+
+                            </div>
+
+                            <div>
+
+                                <p class="text-sm font-medium">
+                                    Salary
+                                </p>
+
+                                <p class="text-xs text-slate-500">
+                                    Income · Yesterday
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <p class="text-sm font-semibold text-green-400">
+                            +$3,200.00
+                        </p>
+
+                    </div>
+
+
+                    <!-- TRANSACTION 3 -->
+
+                    <div
+                        class="px-6 py-4
+                        flex items-center justify-between
+                        hover:bg-white/[0.02]
+                        transition">
+
+                        <div class="flex items-center gap-4">
+
+                            <div
+                                class="w-11 h-11
+                                rounded-full
+                                bg-orange-500/10
+                                text-orange-400
+                                flex items-center justify-center">
+
+                                ↓
+
+                            </div>
+
+                            <div>
+
+                                <p class="text-sm font-medium">
+                                    Grocery Store
+                                </p>
+
+                                <p class="text-xs text-slate-500">
+                                    Shopping · Aug 9
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <p class="text-sm font-semibold text-red-400">
+                            -$126.40
+                        </p>
+
+                    </div>
+
+
+                    <!-- TRANSACTION 4 -->
+
+                    <div
+                        class="px-6 py-4
+                        flex items-center justify-between
+                        hover:bg-white/[0.02]
+                        transition">
+
+                        <div class="flex items-center gap-4">
+
+                            <div
+                                class="w-11 h-11
+                                rounded-full
+                                bg-blue-500/10
+                                text-blue-400
+                                flex items-center justify-center">
+
+                                ↑
+
+                            </div>
+
+                            <div>
+
+                                <p class="text-sm font-medium">
+                                    John Smith
+                                </p>
+
+                                <p class="text-xs text-slate-500">
+                                    Transfer · Aug 8
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <p class="text-sm font-semibold text-green-400">
+                            +$450.00
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <!-- SPENDING -->
+
+                <div
+                    class="rounded-2xl
+                    bg-white/[0.03]
+                    border border-white/10
+                    p-6">
+
+                    <div class="flex justify-between">
+
+                        <div>
+
+                            <h3 class="font-semibold">
+                                Monthly Spending
+                            </h3>
+
+                            <p class="text-xs text-slate-500 mt-1">
+                                August 2026
+                            </p>
+
+                        </div>
+
+                        <button
+                            class="text-slate-500">
+                            ⋮
+                        </button>
+
+                    </div>
+
+
+                    <!-- SIMPLE BAR GRAPH -->
+
+                    <div
+                        class="h-40
+                        mt-8
+                        flex items-end
+                        justify-between
+                        gap-2">
+
+                        <div class="w-full h-[35%] bg-blue-500/30 rounded-t"></div>
+
+                        <div class="w-full h-[50%] bg-blue-500/40 rounded-t"></div>
+
+                        <div class="w-full h-[42%] bg-blue-500/30 rounded-t"></div>
+
+                        <div class="w-full h-[70%] bg-blue-500/60 rounded-t"></div>
+
+                        <div class="w-full h-[55%] bg-blue-500/40 rounded-t"></div>
+
+                        <div class="w-full h-[80%] bg-blue-500/70 rounded-t"></div>
+
+                        <div class="w-full h-[65%] bg-blue-500/50 rounded-t"></div>
+
+                    </div>
+
+
+                    <div
+                        class="flex justify-between
+                        text-[10px]
+                        text-slate-600
+                        mt-2">
+
+                        <span>M</span>
+                        <span>T</span>
+                        <span>W</span>
+                        <span>T</span>
+                        <span>F</span>
+                        <span>S</span>
+                        <span>S</span>
+
+                    </div>
+
+
+                    <div
+                        class="mt-8
+                        pt-5
+                        border-t border-white/10">
+
+                        <p class="text-xs text-slate-500">
+                            Total spent
+                        </p>
+
+                        <p class="text-2xl font-bold mt-1">
+                            $1,284.60
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- ================= FOOTER ================= -->
+
+            <footer
+                class="mt-10
+                pt-6
+                border-t border-white/10
+                flex flex-col md:flex-row
+                justify-between
+                gap-3
+                text-xs text-slate-600">
+
+                <p>
+                    © 2026 ZeeBank. All rights reserved.
+                </p>
+
+                <div class="flex gap-5">
+
+                    <span class="hover:text-slate-400 cursor-pointer">
+                        Privacy
+                    </span>
+
+                    <span class="hover:text-slate-400 cursor-pointer">
+                        Security
+                    </span>
+
+                    <span class="hover:text-slate-400 cursor-pointer">
+                        Help
+                    </span>
+
+                </div>
+
+            </footer>
+
+        </main>
+
+    </div>
+<!-- SEND MONEY MODAL -->
+<div
+    id="sendMoneyModal"
+    class="hidden fixed inset-0 z-[9999]
+           items-center justify-center
+           bg-black/70 backdrop-blur-sm">
+
+    <!-- MODAL BOX -->
+    <div
+        class="relative w-full max-w-md mx-4
+               rounded-2xl
+               bg-slate-900
+               border border-white/10
+               shadow-[0_0_80px_rgba(59,130,246,0.25)]
+               p-6">
+
+        <!-- CLOSE BUTTON -->
+        <button
+            type="button"
+            id="closeSendMoney"
+            class="absolute top-4 right-4
+                   w-8 h-8 rounded-full
+                   flex items-center justify-center
+                   text-slate-400
+                   hover:text-white
+                   hover:bg-white/10
+                   transition">
+
+            ✕
+
+        </button>
+
+
+        <!-- TITLE -->
+        <div class="mb-6">
+
+            <h2 class="text-2xl font-bold text-white">
+                Send Money
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-1">
+                Balance:{{balance if balance else '0000$'}}
+            </p>
+
         </div>
 
-        <div
-            class="w-40 h-40 rounded-full bg-cover bg-center border-2 border-white"
-            style="background-image: url('{{ url_for('static', filename='images/img.jpg') }}');">
+
+        <!-- FORM -->
+        <form
+            id="sendMoneyForm"
+            action="/send-money"
+            method="POST"
+            class="space-y-5">
+
+            <!-- RECIPIENT -->
+            <div>
+
+                <label
+                    for="recipient"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Recipient
+
+                </label>
+
+                <input
+                    id="recipient"
+                    name="recipient"
+                    type="text"
+                    placeholder="Username or account number"
+                    required
+                    class="w-full h-12 px-4
+                           rounded-xl
+                           bg-white/5
+                           border border-white/10
+                           text-white
+                           placeholder:text-slate-600
+                           outline-none
+                           focus:border-blue-500
+                           focus:ring-1
+                           focus:ring-blue-500
+                           transition">
+
+            </div>
+
+
+            <!-- AMOUNT -->
+            <div>
+
+                <label
+                    for="amount"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Amount
+
+                </label>
+
+                <div class="relative">
+
+                    <span
+                        class="absolute left-4 top-3
+                               text-slate-500">
+
+                        $
+
+                    </span>
+
+                    <input
+                        id="amount"
+                        name="amount"
+                        type="number"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="0.00"
+                        required
+                        class="w-full h-12 pl-8 pr-4
+                               rounded-xl
+                               bg-white/5
+                               border border-white/10
+                               text-white
+                               placeholder:text-slate-600
+                               outline-none
+                               focus:border-blue-500
+                               focus:ring-1
+                               focus:ring-blue-500
+                               transition">
+
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+            <div>
+
+                <label
+                    for="description"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Description
+                    <span class="text-slate-600">
+                        (optional)
+                    </span>
+
+                </label>
+
+                <input
+                    id="description"
+                    name="description"
+                    type="text"
+                    placeholder="What's this payment for?"
+                    class="w-full h-12 px-4
+                           rounded-xl
+                           bg-white/5
+                           border border-white/10
+                           text-white
+                           placeholder:text-slate-600
+                           outline-none
+                           focus:border-blue-500
+                           focus:ring-1
+                           focus:ring-blue-500
+                           transition">
+
+            </div>
+            {% if warning %}
+            <!-- WARNING BOX -->
+            <div
+                class="flex gap-3 p-4
+                    rounded-xl
+                  bg-amber-500/10
+                    border border-amber-500/20">
+
+    <!-- WARNING ICON -->
+                <div
+                class="shrink-0 w-9 h-9
+                  rounded-lg
+                bg-amber-500/10
+                text-amber-400
+                  flex items-center justify-center">
+
+                !
+
+                </div>
+
+    <!-- WARNING TEXT -->
+                <div>
+
+                    <p class="text-sm font-semibold text-amber-300">
+                        Please verify the recipient
+                    </p>
+
+                    <p class="text-xs text-amber-200/60 mt-1 leading-relaxed">
+                        {{warning}}
+                    </p>
+
+                </div>
+
+            </div>
+            {% endif %}
+            <!-- BUTTONS -->
+            <div class="flex gap-3 pt-2">
+
+                <button
+                    type="button"
+                    id="cancelSendMoney"
+                    class="flex-1 h-12
+                           rounded-xl
+                           bg-white/5
+                           border border-white/10
+                           text-slate-300
+                           hover:bg-white/10
+                           transition">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="flex-1 h-12
+                           rounded-xl
+                           bg-blue-600
+                           hover:bg-blue-500
+                           font-semibold
+                           transition">
+
+                    Send Money
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+<div
+    id="receiveMoneyModal"
+    class="hidden fixed inset-0 z-[9999]
+           items-center justify-center
+           bg-black/70 backdrop-blur-sm">
+
+    <!-- MODAL BOX -->
+    <div
+        class="relative w-full max-w-md mx-4
+               rounded-2xl
+               bg-slate-900
+               border border-white/10
+               shadow-[0_0_80px_rgba(59,130,246,0.25)]
+               p-6">
+
+        <!-- CLOSE BUTTON -->
+        <button
+            type="button"
+            id="closeReceiveMoney"
+            class="absolute top-4 right-4
+                   w-8 h-8 rounded-full
+                   flex items-center justify-center
+                   text-slate-400
+                   hover:text-white
+                   hover:bg-white/10
+                   transition">
+
+            ✕
+
+        </button>
+
+
+        <!-- TITLE -->
+        <div class="mb-6">
+
+            <h2 class="text-2xl font-bold text-white">
+                Receive Money
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-1">
+                Balance:{{balance if balance else '0000$'}}
+            </p>
+
         </div>
+
+
+        <!-- FORM -->
+        <form
+            id="receiveMoneyForm"
+            action="/send-money"
+            method="POST"
+            class="space-y-5">
+
+            <!-- RECIPIENT -->
+            <div>
+
+                <label
+                    for="recipient"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Sender
+
+                </label>
+
+                <input
+                    id="recipient"
+                    name="recipient"
+                    type="text"
+                    placeholder="Username or account number"
+                    required
+                    class="w-full h-12 px-4
+                           rounded-xl
+                           bg-white/5
+                           border border-white/10
+                           text-white
+                           placeholder:text-slate-600
+                           outline-none
+                           focus:border-blue-500
+                           focus:ring-1
+                           focus:ring-blue-500
+                           transition">
+
+            </div>
+
+
+            <!-- AMOUNT -->
+            <div>
+
+                <label
+                    for="amount"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Amount
+
+                </label>
+
+                <div class="relative">
+
+                    <span
+                        class="absolute left-4 top-3
+                               text-slate-500">
+
+                        $
+
+                    </span>
+
+                    <input
+                        id="amount"
+                        name="amount"
+                        type="number"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="0.00"
+                        required
+                        class="w-full h-12 pl-8 pr-4
+                               rounded-xl
+                               bg-white/5
+                               border border-white/10
+                               text-white
+                               placeholder:text-slate-600
+                               outline-none
+                               focus:border-blue-500
+                               focus:ring-1
+                               focus:ring-blue-500
+                               transition">
+
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+            <div>
+
+                <label
+                    for="description"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Description
+                    <span class="text-slate-600">
+                        (optional)
+                    </span>
+
+                </label>
+
+                <input
+                    id="description"
+                    name="description"
+                    type="text"
+                    placeholder="What's this payment for?"
+                    class="w-full h-12 px-4
+                           rounded-xl
+                           bg-white/5
+                           border border-white/10
+                           text-white
+                           placeholder:text-slate-600
+                           outline-none
+                           focus:border-blue-500
+                           focus:ring-1
+                           focus:ring-blue-500
+                           transition">
+
+            </div>
+            {% if warning %}
+            <!-- WARNING BOX -->
+            <div
+                class="flex gap-3 p-4
+                    rounded-xl
+                  bg-amber-500/10
+                    border border-amber-500/20">
+
+    <!-- WARNING ICON -->
+                <div
+                class="shrink-0 w-9 h-9
+                  rounded-lg
+                bg-amber-500/10
+                text-amber-400
+                  flex items-center justify-center">
+
+                !
+
+                </div>
+
+    <!-- WARNING TEXT -->
+                <div>
+
+                    <p class="text-sm font-semibold text-amber-300">
+                        Please verify the recipient
+                    </p>
+
+                    <p class="text-xs text-amber-200/60 mt-1 leading-relaxed">
+                        {{warning}}
+                    </p>
+
+                </div>
+
+            </div>
+            {% endif %}
+            <!-- BUTTONS -->
+            <div class="flex gap-3 pt-2">
+
+                <button
+                    type="button"
+                    id="cancelReceiveMoney"
+                    class="flex-1 h-12
+                           rounded-xl
+                           bg-white/5
+                           border border-white/10
+                           text-slate-300
+                           hover:bg-white/10
+                           transition">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="flex-1 h-12
+                           rounded-xl
+                           bg-blue-600
+                           hover:bg-blue-500
+                           font-semibold
+                           transition">
+
+                    Receive Money
+
+                </button>
+
+            </div>
+
+        </form>
+
     </div>
-    <div class="flex flex-wrap justify-center gap-10">
-        <div class="w-55 h-35 bg-white rounded-xl"></div>
-        <div class="w-55 h-35 bg-white rounded-xl"></div>
-        <div class="w-55 h-35 bg-white rounded-xl"></div>
-        <div class="w-55 h-35 bg-white rounded-xl"></div>
-        <div class="w-55 h-35 bg-white rounded-xl"></div>
-        <div class="w-55 h-35 bg-white rounded-xl"></div>
+
+</div>
+
+<!-- ================= PAY BILLS MODAL ================= -->
+
+<div
+    id="payBillsModal"
+    class="hidden fixed inset-0 z-[9999]
+           items-center justify-center
+           bg-black/70 backdrop-blur-sm">
+
+    <div
+        class="relative w-full max-w-md mx-4
+               rounded-2xl
+               bg-slate-900
+               border border-white/10
+               shadow-[0_0_80px_rgba(168,85,247,0.20)]
+               p-6">
+
+        <!-- CLOSE -->
+        <button
+            type="button"
+            id="closePayBills"
+            class="absolute top-4 right-4
+                   w-8 h-8 rounded-full
+                   flex items-center justify-center
+                   text-slate-400
+                   hover:text-white
+                   hover:bg-white/10
+                   transition">
+
+            ✕
+
+        </button>
+
+
+        <!-- TITLE -->
+        <div class="mb-6">
+
+            <h2 class="text-2xl font-bold text-white">
+                Pay Bills
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-1">
+                Pay your bills directly from your ZeeBank account.
+            </p>
+
+        </div>
+
+
+        <!-- WARNING -->
+        <div
+            class="flex gap-3 p-4 mb-5
+                   rounded-xl
+                   bg-purple-500/10
+                   border border-purple-500/20">
+
+            <div
+                class="shrink-0 w-9 h-9
+                       rounded-lg
+                       bg-purple-500/10
+                       text-purple-400
+                       flex items-center justify-center
+                       font-bold">
+
+                !
+
+            </div>
+
+            <div>
+
+                <p class="text-sm font-semibold text-purple-300">
+                    Check your billing details
+                </p>
+
+                <p class="text-xs text-purple-200/60 mt-1 leading-relaxed">
+                    Make sure the biller and account information
+                    are correct before making your payment.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+        <form
+            id="payBillsForm"
+            action="/pay-bill"
+            method="POST"
+            class="space-y-5">
+
+
+            <!-- BILLER -->
+            <div>
+
+                <label
+                    for="biller"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Biller
+
+                </label>
+
+                <select
+                    id="biller"
+                    name="biller"
+                    required
+                    class="w-full h-12 px-4
+                           rounded-xl
+                           bg-slate-800
+                           border border-white/10
+                           text-white
+                           outline-none
+                           focus:border-purple-500
+                           focus:ring-1
+                           focus:ring-purple-500
+                           transition">
+
+                    <option value="">
+                        Select a biller
+                    </option>
+
+                    <option value="electricity">
+                        Electricity
+                    </option>
+
+                    <option value="gas">
+                        Gas
+                    </option>
+
+                    <option value="water">
+                        Water
+                    </option>
+
+                    <option value="internet">
+                        Internet
+                    </option>
+
+                    <option value="mobile">
+                        Mobile
+                    </option>
+
+                    <option value="other">
+                        Other
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- ACCOUNT NUMBER -->
+            <div>
+
+                <label
+                    for="billAccount"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Consumer / Account Number
+
+                </label>
+
+                <input
+                    id="billAccount"
+                    name="bill_account"
+                    type="text"
+                    placeholder="Enter account number"
+                    required
+                    class="w-full h-12 px-4
+                           rounded-xl
+                           bg-white/5
+                           border border-white/10
+                           text-white
+                           placeholder:text-slate-600
+                           outline-none
+                           focus:border-purple-500
+                           focus:ring-1
+                           focus:ring-purple-500
+                           transition">
+
+            </div>
+
+
+            <!-- AMOUNT -->
+            <div>
+
+                <label
+                    for="billAmount"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Amount
+
+                </label>
+
+                <div class="relative">
+
+                    <span
+                        class="absolute left-4 top-3
+                               text-slate-500">
+
+                        $
+
+                    </span>
+
+                    <input
+                        id="billAmount"
+                        name="amount"
+                        type="number"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="0.00"
+                        required
+                        class="w-full h-12 pl-8 pr-4
+                               rounded-xl
+                               bg-white/5
+                               border border-white/10
+                               text-white
+                               placeholder:text-slate-600
+                               outline-none
+                               focus:border-purple-500
+                               focus:ring-1
+                               focus:ring-purple-500
+                               transition">
+
+                </div>
+
+            </div>
+
+
+            <!-- BUTTONS -->
+            <div class="flex gap-3 pt-2">
+
+                <button
+                    type="button"
+                    id="cancelPayBills"
+                    class="flex-1 h-12
+                           rounded-xl
+                           bg-white/5
+                           border border-white/10
+                           text-slate-300
+                           hover:bg-white/10
+                           transition">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="flex-1 h-12
+                           rounded-xl
+                           bg-purple-600
+                           hover:bg-purple-500
+                           font-semibold
+                           transition">
+
+                    Pay Bill
+
+                </button>
+
+            </div>
+
+        </form>
+
     </div>
+
+</div>
+<!-- ================= ADD FUNDS MODAL ================= -->
+
+<div
+    id="addFundsModal"
+    class="hidden fixed inset-0 z-[9999]
+           items-center justify-center
+           bg-black/70 backdrop-blur-sm">
+
+    <div
+        class="relative w-full max-w-md mx-4
+               rounded-2xl
+               bg-slate-900
+               border border-white/10
+               shadow-[0_0_80px_rgba(34,197,94,0.20)]
+               p-6">
+
+        <!-- CLOSE -->
+        <button
+            type="button"
+            id="closeAddFunds"
+            class="absolute top-4 right-4
+                   w-8 h-8 rounded-full
+                   flex items-center justify-center
+                   text-slate-400
+                   hover:text-white
+                   hover:bg-white/10
+                   transition">
+
+            ✕
+
+        </button>
+
+
+        <!-- TITLE -->
+        <div class="mb-6">
+
+            <h2 class="text-2xl font-bold text-white">
+                Add Funds
+            </h2>
+
+            <p class="text-sm text-slate-500 mt-1">
+                Add money to your ZeeBank account.
+            </p>
+
+        </div>
+
+
+        <!-- INFO BOX -->
+        <div
+            class="flex gap-3 p-4 mb-5
+                   rounded-xl
+                   bg-green-500/10
+                   border border-green-500/20">
+
+            <div
+                class="shrink-0 w-9 h-9
+                       rounded-lg
+                       bg-green-500/10
+                       text-green-400
+                       flex items-center justify-center
+                       font-bold">
+
+                +
+
+            </div>
+
+            <div>
+
+                <p class="text-sm font-semibold text-green-300">
+                    Add funds securely
+                </p>
+
+                <p class="text-xs text-green-200/60 mt-1 leading-relaxed">
+                    Enter the amount you want to add and select
+                    your funding source.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- FORM -->
+        <form
+            id="addFundsForm"
+            action="/add-funds"
+            method="POST"
+            class="space-y-5">
+
+
+            <!-- FUNDING SOURCE -->
+            <div>
+
+                <label
+                    for="fundingSource"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Funding Source
+
+                </label>
+
+                <select
+                    id="fundingSource"
+                    name="funding_source"
+                    required
+                    class="w-full h-12 px-4
+                           rounded-xl
+                           bg-slate-800
+                           border border-white/10
+                           text-white
+                           outline-none
+                           focus:border-green-500
+                           focus:ring-1
+                           focus:ring-green-500
+                           transition">
+
+                    <option value="">
+                        Select funding source
+                    </option>
+
+                    <option value="bank_account">
+                        Bank Account
+                    </option>
+
+                    <option value="debit_card">
+                        Debit Card
+                    </option>
+
+                    <option value="cash_deposit">
+                        Cash Deposit
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <!-- AMOUNT -->
+            <div>
+
+                <label
+                    for="fundAmount"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Amount
+
+                </label>
+
+                <div class="relative">
+
+                    <span
+                        class="absolute left-4 top-3
+                               text-slate-500">
+
+                        $
+
+                    </span>
+
+                    <input
+                        id="fundAmount"
+                        name="amount"
+                        type="number"
+                        min="0.01"
+                        step="0.01"
+                        placeholder="0.00"
+                        required
+                        class="w-full h-12 pl-8 pr-4
+                               rounded-xl
+                               bg-white/5
+                               border border-white/10
+                               text-white
+                               placeholder:text-slate-600
+                               outline-none
+                               focus:border-green-500
+                               focus:ring-1
+                               focus:ring-green-500
+                               transition">
+
+                </div>
+
+            </div>
+
+
+            <!-- DESCRIPTION -->
+            <div>
+
+                <label
+                    for="fundDescription"
+                    class="block text-sm text-slate-400 mb-2">
+
+                    Description
+                    <span class="text-slate-600">
+                        (optional)
+                    </span>
+
+                </label>
+
+                <input
+                    id="fundDescription"
+                    name="description"
+                    type="text"
+                    placeholder="e.g. Monthly deposit"
+                    class="w-full h-12 px-4
+                           rounded-xl
+                           bg-white/5
+                           border border-white/10
+                           text-white
+                           placeholder:text-slate-600
+                           outline-none
+                           focus:border-green-500
+                           focus:ring-1
+                           focus:ring-green-500
+                           transition">
+
+            </div>
+
+
+            <!-- BUTTONS -->
+            <div class="flex gap-3 pt-2">
+
+                <button
+                    type="button"
+                    id="cancelAddFunds"
+                    class="flex-1 h-12
+                           rounded-xl
+                           bg-white/5
+                           border border-white/10
+                           text-slate-300
+                           hover:bg-white/10
+                           transition">
+
+                    Cancel
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="flex-1 h-12
+                           rounded-xl
+                           bg-green-600
+                           hover:bg-green-500
+                           font-semibold
+                           transition">
+
+                    Add Funds
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+<script>
+    const sendMoneyModal = document.getElementById("sendMoneyModal");
+    const closeSendMoney = document.getElementById("closeSendMoney");
+    const cancelSendMoney = document.getElementById("cancelSendMoney");
+    const receiveMoneyModal = document.getElementById("receiveMoneyModal");
+    const closeReceiveMoney = document.getElementById("closeReceiveMoney");
+    const cancelReceiveMoney = document.getElementById("cancelReceiveMoney");
+
+    function openSendMoneyModal() {
+        sendMoneyModal.classList.remove("hidden");
+        sendMoneyModal.classList.add("flex");
+    }
+
+    function closeSendMoneyModal() {
+        sendMoneyModal.classList.remove("flex");
+        sendMoneyModal.classList.add("hidden");
+    }
+
+    closeSendMoney.addEventListener("click", closeSendMoneyModal);
+    cancelSendMoney.addEventListener("click", closeSendMoneyModal);
+
+    function openReceiveMoneyModal() {
+        receiveMoneyModal.classList.remove("hidden");
+        receiveMoneyModal.classList.add("flex");
+    }
+
+    function closeReceiveMoneyModal() {
+        receiveMoneyModal.classList.remove("flex");
+        receiveMoneyModal.classList.add("hidden");
+    }
+
+    closeReceiveMoney.addEventListener("click", closeReceiveMoneyModal);
+    cancelReceiveMoney.addEventListener("click", closeReceiveMoneyModal);
+    function openPayBillsModal() {
+        payBillsModal.classList.remove("hidden");
+        payBillsModal.classList.add("flex");
+    }
+
+    function closePayBillsModal() {
+        payBillsModal.classList.remove("flex");
+        payBillsModal.classList.add("hidden");
+    }
+
+
+// ================= ADD FUNDS =================
+
+    function openAddFundsModal() {
+        addFundsModal.classList.remove("hidden");
+        addFundsModal.classList.add("flex");
+    }
+
+    function closeAddFundsModal() {
+        addFundsModal.classList.remove("flex");
+        addFundsModal.classList.add("hidden");
+    }
+
+
+// ================= CLOSE BUTTONS =================
+
+    document
+        .getElementById("closePayBills")
+        .addEventListener("click", closePayBillsModal);
+
+    document
+        .getElementById("cancelPayBills")
+        .addEventListener("click", closePayBillsModal);
+
+
+    document
+        .getElementById("closeAddFunds")
+        .addEventListener("click", closeAddFundsModal);
+
+    document
+        .getElementById("cancelAddFunds")
+        .addEventListener("click", closeAddFundsModal);
+</script>
+
 </body>
-55html5
+
+</html>
