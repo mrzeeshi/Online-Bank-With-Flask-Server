@@ -10,7 +10,6 @@
     <link rel="stylesheet"
         href="{{ url_for('static', filename='css/output.css') }}">
 </head>
-
 <body class="min-h-screen bg-slate-950 text-white p-4 md:p-8">
 
     <!-- MAIN CONTAINER -->
@@ -127,11 +126,11 @@
                     <div class="leading-tight">
 
                         <p class="text-sm font-bold">
-                            {{name if name else "Guest"}}
+                            {{message.name if message.name else "Guest"}}
                         </p>
 
                         <p class="text-xs text-slate-500">
-                            {{username if username else "@guest"}}
+                            @{{message.username if message.username else "guest"}}
                         </p>
 
                     </div>
@@ -276,7 +275,7 @@
                                 </p>
 
                                 <p class="text-sm tracking-widest mt-1">
-                                    {{account_no if account_no else '0000 0000 0000 0000'}}
+                                    {{message.card_no if message.card_no else '0000 0000 0000 0000'}}
                                 </p>
 
                             </div>
