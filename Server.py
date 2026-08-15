@@ -1,13 +1,16 @@
-from flask import Flask,render_template,request,redirect,session
+from flask import Flask,render_template,request,redirect,session,url_for
 import hashlib
 import json
 import random
 import os
+import pandas as pd
+from datetime import datetime,date
 app=Flask(__name__,template_folder='.')
 app.secret_key='my secret key'
+trans=recent_transactions()
 error=''
 with open ('data.json','r') as file:
-    user=json.load(file)
+    users=json.load(file)
 @app.route('/signup',methods=['GET','POST'])
 def home():
     error=''
@@ -25,9 +28,9 @@ def home():
         if not error:
             account_no=generate_random_card_info()
             username=generate_username(firstname)
-            while account_no in user:
+            while account_no in users:
                 account_no=generate_random_card_info()
-            while username in user:
+            while username in users:
                 username=generate_username(firstname)
             user_data={
                 'name':firstname + lastname,
@@ -35,11 +38,12 @@ def home():
                 'email':email,
                 'password':hashlib.sha256(passs.encode()).hexdigest(),
                 'account_no':account_no,
-                'username':username
+                'username':username,
+                'balance':0
             }
-            user.append(user_data)        
+            users.append(user_data)        
             with open ('data.json','w') as file_to_write:
-                json.dump(user,file_to_write,indent=4)
+                json.dump(users,file_to_write,indent=4)
             return render_template('Login.html')
         else:
             return render_template('Signup.html' , error=error,
@@ -63,10 +67,12 @@ def login():
                 name=user['name']
                 username=user['username']
                 card_no=user['account_no']
+                balance=user['balance']
                 message={
                     'name':name,
                     'username':username,
-                    'card_no':card_no
+                    'card_no':card_no,
+                    'balance':balance
                 }
                 return render_template('Dashboard.html',message=message)
         return render_template('Login.html',error=email)
@@ -74,10 +80,67 @@ def login():
         return render_template('Login.html')
 @app.route('/send-money' , methods=['GET','POST'])
 def sendmoney():
+    messagee=''
+    sender={}
     if request.method=='POST':
-        email=session['email']
+        email=session.get('email')
         receiver=request.form['recipient']
-        amount=request.form['amount']
+        amount=int(request.form['amount'])
+        for user in users:
+            if user['email']==email:
+                sender=user
+                balance=sender['balance']
+                if amount>10000000 or amount<0:
+                    messagee+='The amount greater than one milion or less than 0 cannot be transacted'
+                if amount>balance:
+                    messagee+='insufficient balance'
+                else:
+                    messagee+='.'
+        if not messagee:
+            messagee="user with this email don't exists"
+        if messagee!='.':
+            name=sender['name']
+            username=sender['username']
+            card_no=sender['account_no']
+            balance=sender['balance']
+            message={
+                'name':name,
+                'username':username,
+                'card_no':card_no,
+                'balance':balance,
+                'messagee':messagee,
+                'open_send_money':True
+            }
+            return render_template('Dashboard.html',message=message)
+        else:
+            sender['balance']-=amount
+            with open ('data.json','w') as file:
+                json.dump(users,file,indent=4)
+            transactions = pd.DataFrame([{
+                'sender': email,
+                'receiver': receiver,
+                'amount': amount,
+                'type': 'sent',
+                'date': datetime.now().strftime('%Y:%m:%d'),
+                'time': datetime.now().strftime('%H:%M:%S'),
+                'day': datetime.now().strftime('%A')
+            }])
+            transactions.to_csv("transactions.csv",mode='a',header=False,index=False)
+            messagee='transaction successfull'
+            name=sender['name']
+            username=sender['username']
+            card_no=sender['account_no']
+            balance=sender['balance']
+            message={
+                'name':name,
+                'username':username,
+                'card_no':card_no,
+                'balance':balance,
+                'messagee':messagee,
+                'open_send_money':False
+            }
+            return render_template('Dashboard.html',message=message)
+
 @app.route('/Dashboard')
 def dashboard():
     return render_template('Dashboard.html')
@@ -101,5 +164,7 @@ def generate_username(firstname):
     random_chars='1234567890abcdefghijklmnopqrstuvwxyz'
     username+=''.join(random.sample(random_chars,k=5))
     return username
+def recent_transactions():
+    return 5
 if __name__=='__main__':
     app.run(debug=True)

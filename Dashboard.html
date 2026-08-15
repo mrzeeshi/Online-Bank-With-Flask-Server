@@ -217,7 +217,7 @@
                                 </p>
 
                                 <h3 class="text-4xl font-bold mt-2">
-                                    {{balance if balance else '000000$'}}
+                                    {{message.balance if message.balance else '000000$'}}$
                                 </h3>
 
                                 <div
@@ -911,7 +911,7 @@
             </h2>
 
             <p class="text-sm text-slate-500 mt-1">
-                Balance:{{balance if balance else '0000$'}}
+                Balance:{{message.balance if message.balance else '0000$'}}
             </p>
 
         </div>
@@ -1034,13 +1034,14 @@
                            transition">
 
             </div>
-            {% if warning %}
+            {% if message.messagee %}
             <!-- WARNING BOX -->
             <div
                 class="flex gap-3 p-4
                     rounded-xl
                   bg-amber-500/10
-                    border border-amber-500/20">
+                    border border-amber-500/20"
+                    id="warning1">
 
     <!-- WARNING ICON -->
                 <div
@@ -1057,12 +1058,12 @@
     <!-- WARNING TEXT -->
                 <div>
 
-                    <p class="text-sm font-semibold text-amber-300">
-                        Please verify the recipient
+                    <p class="text-sm font-bold text-red-400">
+                        Error
                     </p>
 
                     <p class="text-xs text-amber-200/60 mt-1 leading-relaxed">
-                        {{warning}}
+                        {{message.messagee}}
                     </p>
 
                 </div>
@@ -1885,6 +1886,9 @@
     function closeSendMoneyModal() {
         sendMoneyModal.classList.remove("flex");
         sendMoneyModal.classList.add("hidden");
+        remove_warning=document.getElementById("warning1")
+        remove_warning.classList.remove("flex")
+        remove_warning.classList.add("hidden")
     }
 
     closeSendMoney.addEventListener("click", closeSendMoneyModal);
@@ -1944,6 +1948,16 @@
     document
         .getElementById("cancelAddFunds")
         .addEventListener("click", closeAddFundsModal);
+    {% if not message.open_send_money %}
+        remove_warning=document.getElementById("warning1")
+        remove_warning.classList.remove("flex")
+        remove_warning.classList.add("hidden")
+    {% endif %}
+
+    {% if message.open_send_money %}
+        openSendMoneyModal()
+    {% endif %}
+
 </script>
 
 </body>
