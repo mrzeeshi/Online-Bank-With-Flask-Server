@@ -4,9 +4,9 @@
       "src": "Server.py",
       "use": "@vercel/python",
       "config": {
-        "includeFiles": ["Dashboard.html", "Login.html", "Signup.html", "static/**"]
+        "includeFiles": ["*.html", "static/**", "data.json"]
       }
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "server.py" }]
+  "routes": [{ "src": "/(.*)", "dest": "Server.py" }]
 }
