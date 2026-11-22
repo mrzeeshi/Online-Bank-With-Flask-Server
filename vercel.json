@@ -1,12 +1,12 @@
 {
   "builds": [
     {
-      "src": "Server.py",
+      "src": "server.py",
       "use": "@vercel/python",
       "config": {
-        "includeFiles": ["*.html", "static/**", "data.json"]
+        "includeFiles": ["Dashboard.html", "Login.html", "Signup.html", "static/**", "data.json"]
       }
     }
   ],
-  "routes": [{ "src": "/(.*)", "dest": "Server.py" }]
+  "routes": [{ "src": "/(.*)", "dest": "server.py" }]
 }
